@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#fbf7f1">
+  <meta name="description" content="dokidoki — уютная веб-игра о волшебном питомце: эмоции, болезни, магазин, мини-игры и приключения.">
+  <title>dokidoki — уютный питомец</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="bg-ornaments" aria-hidden="true">
+    <span class="blob blob-1"></span>
+    <span class="blob blob-2"></span>
+    <span class="blob blob-3"></span>
+    <span class="blob blob-4"></span>
+    <span class="grain"></span>
+  </div>
+
+  <header class="topbar" id="topbar">
+    <button class="brand" id="brandBtn" type="button" aria-label="На главный экран">
+      <span class="brand-mark">d</span>
+      <span class="brand-text">doki<em>doki</em></span>
+    </button>
+
+    <div class="top-chips" id="topChips">
+      <div class="chip chip-day" id="dayChip" title="Игровой день и время">
+        <span class="chip-ico" id="dayIco">☀️</span>
+        <span id="dayText">День 1 · 08:00</span>
+      </div>
+
+      <div class="chip chip-coins" id="coinChip" title="Монеты">
+        <span class="chip-ico">🪙</span>
+        <span id="coinText">120</span>
+      </div>
+
+      <div class="chip chip-level" id="levelChip" title="Уровень питомца">
+        <span class="chip-ico">✨</span>
+        <span id="levelText">Ур. 1</span>
+      </div>
+    </div>
+
+    <div class="top-actions">
+      <button class="icon-btn" id="btnInventory" type="button" title="Рюкзак" aria-label="Рюкзак">
+        🎒
+        <span class="dot-badge" id="invBadge">0</span>
+      </button>
+
+      <button class="icon-btn" id="btnShop" type="button" title="Магазин" aria-label="Магазин">
+        🛍️
+      </button>
+
+      <button class="icon-btn" id="btnMenu" type="button" title="Меню" aria-label="Меню">
+        ⚙️
+      </button>
+    </div>
+  </header>
+
+  <main class="main">
+    <!-- Стартовый экран -->
+    <section class="screen screen-start is-active" id="screenStart">
+      <div class="hero">
+        <div class="hero-copy">
+          <span class="eyebrow">уютная игра о заботе</span>
+
+          <h1 class="hero-title">
+            doki<span>doki</span>
+          </h1>
+
+          <p class="hero-sub">
+            Посели у себя волшебного питомца: корми, лечи, играй и отправляйся
+            в мягкие приключения по лесу, пещерам и деревне.
+          </p>
+
+          <div class="hero-actions">
+            <button class="btn btn-primary btn-lg" id="btnNewGame" type="button">
+              Начать историю
+            </button>
+
+            <button class="btn btn-ghost btn-lg" id="btnContinue" type="button" disabled>
+              Продолжить
+            </button>
+          </div>
+
+          <ul class="hero-features">
+            <li><span>🐾</span>10 питомцев</li>
+            <li><span>🎮</span>3 мини-игры</li>
+            <li><span>🗺️</span>3 локации</li>
+            <li><span>🌗</span>день и ночь</li>
+          </ul>
+
+          <p class="hero-note">
+            Прогресс сохраняется в браузере автоматически.
+          </p>
+        </div>
+
+        <div class="hero-art" id="heroArt" aria-hidden="true"></div>
+      </div>
+    </section>
+
+    <!-- Выбор питомца -->
+    <section class="screen screen-select" id="screenSelect">
+      <div class="section-head">
+        <button class="btn btn-ghost btn-sm" id="btnBackStart" type="button">
+          ← Назад
+        </button>
+
+        <div class="section-head-copy">
+          <span class="eyebrow">шаг первый</span>
+          <h2>Выбери своего друга</h2>
+          <p class="muted">
+            У каждого питомца свой характер, навык и стиль боя.
+          </p>
+        </div>
+      </div>
+
+      <div class="pet-grid" id="petGrid"></div>
+
+      <div class="select-bar">
+        <label class="name-field">
+          <span>Имя питомца</span>
+          <input
+            id="petNameInput"
+            maxlength="16"
+            placeholder="Например, Тофу"
+            autocomplete="off"
+          >
+        </label>
+
+        <button class="btn btn-primary btn-lg" id="btnStartGame" type="button" disabled>
+          Поселить дома
+        </button>
+      </div>
+    </section>
+
+    <!-- Игровой экран -->
+    <section class="screen screen-game" id="screenGame">
+      <div class="game-grid">
+        <!-- Левая панель -->
+        <aside class="panel pet-panel">
+          <div class="panel-title-row">
+            <div>
+              <h2 id="petName">Питомец</h2>
+              <span class="muted small" id="petSpecies">Собака</span>
+            </div>
+
+            <span class="emotion-badge" id="emotionBadge">Спокойствие</span>
+          </div>
+
+          <div class="mini-pet" id="miniPet"></div>
+          <div class="bars" id="statBars"></div>
+          <div class="pet-meta" id="petMeta"></div>
+          <div class="skill-card" id="skillCard"></div>
+          <div class="illness-card" id="illnessCard"></div>
+
+          <button class="btn btn-soft btn-sm rename-btn" id="btnRename" type="button">
+            ✏️ Переименовать
+          </button>
+        </aside>
+
+        <!-- Сцена -->
+        <section class="panel stage-panel">
+          <div class="stage" id="stage">
+            <div class="stage-scene" id="stageScene"></div>
+            <div class="stage-ambient" id="stageAmbient"></div>
+
+            <div class="stage-top">
+              <span class="place-chip" id="placeChip">🏡 Домик</span>
+              <span class="time-chip" id="timeChip">☀️ День</span>
+            </div>
+
+            <div class="bubble" id="bubble">...</div>
+            <div class="pet-wrap" id="petWrap"></div>
+            <div class="fx-layer" id="fxLayer"></div>
+          </div>
+
+          <div class="actions">
+            <button class="action-btn" data-action="feed" type="button">
+              <span>🍎</span>Покормить
+            </button>
+
+            <button class="action-btn" data-action="play" type="button">
+              <span>🎾</span>Поиграть
+            </button>
+
+            <button class="action-btn" data-action="sleep" type="button">
+              <span>🌙</span>Спать
+            </button>
+
+            <button class="action-btn" data-action="heal" type="button">
+              <span>💊</span>Лечить
+            </button>
+          </div>
+        </section>
+
+        <!-- Правая панель -->
+        <aside class="panel side-panel">
+          <div class="side-block">
+            <div class="side-head">
+              <h3>Приключения</h3>
+              <span class="muted small">сюжет</span>
+            </div>
+
+            <div class="location-list" id="locationList"></div>
+          </div>
+
+          <div class="side-block">
+            <div class="side-head">
+              <h3>Мини-игры</h3>
+              <span class="muted small">награды</span>
+            </div>
+
+            <div class="minigame-list" id="minigameList">
+              <button class="mini-card mini-math" data-minigame="math" type="button">
+                <span class="mini-ico">➗</span>
+                <span class="mini-copy">
+                  <strong>Уравнения</strong>
+                  <small>математика разных уровней</small>
+                </span>
+                <span class="mini-arrow">→</span>
+              </button>
+
+              <button class="mini-card mini-dungeon" data-minigame="dungeon" type="button">
+                <span class="mini-ico">🗝️</span>
+                <span class="mini-copy">
+                  <strong>Данж</strong>
+                  <small>5 комнат и сундуки</small>
+                </span>
+                <span class="mini-arrow">→</span>
+              </button>
+
+              <button class="mini-card mini-arena" data-minigame="arena" type="button">
+                <span class="mini-ico">⚔️</span>
+                <span class="mini-copy">
+                  <strong>Арена</strong>
+                  <small>бой с тамагочи</small>
+                </span>
+                <span class="mini-arrow">→</span>
+              </button>
+            </div>
+          </div>
+
+          <div class="tip-box" id="tipBox"></div>
+        </aside>
+      </div>
+    </section>
+  </main>
+
+  <div class="modal-root" id="modalRoot" aria-live="polite"></div>
+  <div class="battle-layer" id="battleLayer" hidden></div>
+  <div class="toast-root" id="toastRoot" aria-live="polite"></div>
+
+  <script src="script.js"></script>
+</body>
+</html>
